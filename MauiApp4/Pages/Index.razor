@@ -1,0 +1,108 @@
+﻿@page "/"
+@using MauiApp4.Data;
+
+
+@using MauiApp4.Data
+@using Microsoft.Data.SqlClient
+@using System.Security.Claims
+@using OneSignalSDK.DotNet;
+
+
+@inject NavigationManager navManager
+@inject IJSRuntime JS
+
+@*@inject ProtectedLocalStorage BrowserStorage
+*@
+
+
+
+    <div class="loginpage">
+        <input class="loginpage" id="username" @bind="user.UserName" placeholder="Kullanıcı adı">
+    </div>
+    <div class="loginpage">
+
+        <input class="loginpage" id="password" @bind="user.Password" type="password" placeholder="Şifre">
+    </div>
+    <div class="loginpage">
+        <button class="btn btn-primary" onclick="@button1OnClick">
+            <span>Giriş Yap</span>
+        </button>
+    </div>
+    <div class="loginpage">
+        <button class="btn btn-primary" onclick="@input1Changed">Üye Ol</button>
+    </div>
+
+
+
+
+
+
+       
+
+@code {
+    SqlConnector sqlConnector=new SqlConnector();
+    public User user;
+    [Parameter]
+    public string username{ get; set; }
+    public string Auth = "";
+    public string GetAuth{ get; set; }
+    string currentInputValue;
+
+    protected override void OnInitialized()
+    {
+
+        // Auth = "";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {        user = new User();
+        //BrowserStorage.SetAsync("Auth", "false");
+       // OneSignal.Default.SendTag("tagName", "tagValue");
+
+        //var result = await BrowserStorage.GetAsync<string>("Auth");
+        //Auth = result.Success ? result.Value : "false";
+        //user.Auth = Convert.ToBoolean(Auth);
+        //OneSignal.Default.Initialize("a6b5fc88-8cb1-40a6-9ac2-d3225f3e1140");
+        //OneSignal.Default.PromptForPushNotificationsWithUserResponse();
+    }
+
+    public async Task input1Changed(){
+        navManager.NavigateTo("/Register");
+
+    }
+    public void GoWeek(){
+        navManager.NavigateTo("/WeeksMatches");
+    }
+    void button1OnClick()
+    {
+
+
+        // username = user.UserName;
+        // Console.WriteLine(username);
+        sqlConnector.Connection().Open();
+        SqlCommand sqlCommand = new SqlCommand("select * from Users where UserName=@p1 and Password=@p2",sqlConnector.Connection());
+        sqlCommand.Parameters.AddWithValue("@p1", user.UserName);
+        sqlCommand.Parameters.AddWithValue("@p2", user.Password);
+        SqlDataReader dataReader = sqlCommand.ExecuteReader();
+        if(dataReader.Read()){
+            user.Auth = true;
+            //BrowserStorage.SetAsync("UserName", user.UserName);
+            // BrowserStorage.SetAsync("Auth","true");
+
+            //    myStateContainer.SetValue(user);
+            Preferences.Set("UserName", user.UserName);
+            Preferences.Set("UserId", dataReader["Id"].ToString());
+
+            navManager.NavigateTo($"/WeeksMatches/{dataReader["Id"].ToString()}");
+        }
+        else
+        {
+            JS.InvokeVoidAsync("alertmes", "Kullanıcı adı ya da şifre yanlış.");
+
+        }
+        sqlConnector.Connection().Close();
+       // Console.WriteLine("Aad:" + );
+
+    }
+    }
+    

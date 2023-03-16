@@ -1,0 +1,1258 @@
+﻿.p0c-competition-tables {
+    position: relative
+}
+
+@media (min-width: 480px) {
+    .p0c-competition-tables__split-trigger {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+        flex: 1 1 100%;
+        overflow: hidden
+    }
+}
+
+.p0c-competition-tables .component-dropdown {
+    background-color: #0d4270;
+    text-transform: uppercase;
+    max-width: 13.75rem
+}
+
+@media (min-width: 480px) {
+    .p0c-competition-tables .component-dropdown {
+        max-width: 100%
+    }
+}
+
+.p0c-competition-tables .component-dropdown__custom {
+    font-size: .875rem;
+    color: #fff
+}
+
+.p0c-competition-tables .component-dropdown__custom--active .component-dropdown__custom-label {
+    color: #232323
+}
+
+.p0c-competition-tables .component-dropdown__custom--active .component-dropdown__custom-button {
+    color: #232323
+}
+
+.p0c-competition-tables .component-dropdown__custom-item {
+    font-size: .875rem;
+    color: #232323
+}
+
+.p0c-competition-tables .component-dropdown__custom-item--active {
+    color: #1f80d1
+}
+
+.p0c-competition-tables .component-dropdown__custom-button {
+    color: inherit
+}
+
+.p0c-competition-tables__stage-filter {
+    width: 100%;
+    height: 2.25rem;
+    text-align: center;
+    margin-bottom: .625rem
+}
+
+    .p0c-competition-tables__stage-filter::after {
+        clear: both;
+        content: "";
+        display: table
+    }
+
+    .p0c-competition-tables__stage-filter .component-dropdown {
+        background-color: #fff
+    }
+
+    .p0c-competition-tables__stage-filter .component-dropdown__custom {
+        color: #232323;
+        border: 1px solid #0d4270;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between
+    }
+
+    .p0c-competition-tables__stage-filter .component-dropdown__custom--active {
+        border: 0
+    }
+
+    .p0c-competition-tables__stage-filter .component-dropdown__custom-label {
+        width: auto
+    }
+
+.p0c-competition-tables__title {
+    width: 50%;
+    float: left
+}
+
+.p0c-competition-tables__rank-change-col {
+    display: none
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__rank-change-col {
+        display: table-cell
+    }
+}
+
+.p0c-competition-tables--snippet .p0c-competition-tables__row {
+    display: none
+}
+
+    .p0c-competition-tables--snippet .p0c-competition-tables__row[data-show-always] {
+        display: table-row
+    }
+
+.p0c-competition-tables--snippet-expand .p0c-competition-tables__row {
+    display: table-row
+}
+
+.p0c-competition-tables__header {
+    background-color: #0d4270
+}
+
+.p0c-competition-tables__table-wrapper {
+    position: relative
+}
+
+.p0c-competition-tables__table {
+    position: relative;
+    background-color: #fff;
+    color: #232323;
+    font-size: .875rem;
+    width: 100%;
+    border-spacing: 0;
+    table-layout: fixed
+}
+
+    .p0c-competition-tables__table thead {
+        background-color: #d8d8d8;
+        color: #232323
+    }
+
+    .p0c-competition-tables__table tfoot td {
+        text-align: left
+    }
+
+        .p0c-competition-tables__table tfoot td.p0c-competition-tables__show-more {
+            text-align: center
+        }
+
+    .p0c-competition-tables__table th, .p0c-competition-tables__table td {
+        vertical-align: middle;
+        text-align: center;
+        height: 2.75rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0
+    }
+
+        .p0c-competition-tables__table th.p0c-competition-tables__cell--bp-580, .p0c-competition-tables__table td.p0c-competition-tables__cell--bp-580 {
+            display: none
+        }
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table th.p0c-competition-tables__cell--bp-580, .p0c-competition-tables__table td.p0c-competition-tables__cell--bp-580 {
+        display: table-cell
+    }
+}
+
+.p0c-competition-tables__table th {
+    text-transform: uppercase;
+    font-weight: 500;
+    height: 2.125rem
+}
+
+    .p0c-competition-tables__table th.p0c-competition-tables__team, .p0c-competition-tables__table td.p0c-competition-tables__team, .p0c-competition-tables__table th.p0c-competition-tables__dataset--team, .p0c-competition-tables__table td.p0c-competition-tables__dataset--team, .p0c-competition-tables__table th.p0c-competition-tables__last5, .p0c-competition-tables__table td.p0c-competition-tables__last5 {
+        text-align: left
+    }
+
+    .p0c-competition-tables__table th.p0c-competition-tables__team, .p0c-competition-tables__table td.p0c-competition-tables__team {
+        width: 25%
+    }
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table th.p0c-competition-tables__team, .p0c-competition-tables__table td.p0c-competition-tables__team {
+        width: 13.75rem
+    }
+}
+
+@media (min-width: 980px) {
+    .p0c-competition-tables__table th.p0c-competition-tables__team, .p0c-competition-tables__table td.p0c-competition-tables__team {
+        width: 11.25rem
+    }
+}
+
+@media (min-width: 1580px) {
+    .p0c-competition-tables__table th.p0c-competition-tables__team, .p0c-competition-tables__table td.p0c-competition-tables__team {
+        width: 15.625rem
+    }
+}
+
+.p0c-competition-tables__table th.p0c-competition-tables__last5, .p0c-competition-tables__table td.p0c-competition-tables__last5 {
+    display: none;
+    width: 8.4375rem
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table th.p0c-competition-tables__last5, .p0c-competition-tables__table td.p0c-competition-tables__last5 {
+        display: table-cell
+    }
+}
+
+.p0c-competition-tables__table td.p0c-competition-tables__last5 {
+    font-size: 0;
+    line-height: 0;
+    text-align: left
+}
+
+    .p0c-competition-tables__table td.p0c-competition-tables__last5 .p0c-competition-tables__match-status--last::after, .p0c-competition-tables__table td.p0c-competition-tables__last5 .p0c-competition-tables__match-status:last-child::after {
+        content: "";
+        display: block;
+        width: 1.375rem;
+        height: .1875rem;
+        position: absolute;
+        background-color: inherit;
+        top: 1.4375rem;
+        left: 0
+    }
+
+.p0c-competition-tables__table--head-to-head tbody tr {
+    cursor: pointer
+}
+
+.dev-desktop .p0c-competition-tables__table--head-to-head tbody tr:hover {
+    background-color: #ff8100
+}
+
+.p0c-competition-tables__table--total {
+    left: 0
+}
+
+    .p0c-competition-tables__table--total th:first-child {
+        padding-left: 5px
+    }
+
+.p0c-competition-tables__table--form, .p0c-competition-tables__table--over-under {
+    font-size: .875rem;
+    table-layout: auto
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table--form, .p0c-competition-tables__table--over-under {
+        table-layout: fixed
+    }
+}
+
+.p0c-competition-tables__table--form col.p0c-competition-tables__team, .p0c-competition-tables__table--form col.p0c-competition-tables__dataset--team, .p0c-competition-tables__table--over-under col.p0c-competition-tables__team, .p0c-competition-tables__table--over-under col.p0c-competition-tables__dataset--team {
+    width: 16.4%
+}
+
+.p0c-competition-tables__table--form col.p0c-competition-tables__numeric, .p0c-competition-tables__table--over-under col.p0c-competition-tables__numeric {
+    width: 3.6%
+}
+
+.p0c-competition-tables__table--form tr, .p0c-competition-tables__table--over-under tr {
+    text-align: center
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table--form .p0c-competition-tables__dataset--primary-group-separator, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--primary-group-separator {
+        border-right: 1px solid #e8e8e8
+    }
+
+    .p0c-competition-tables__table--form .p0c-competition-tables__dataset--secondary-group-separator, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--secondary-group-separator {
+        border-right: 1px solid #fff
+    }
+}
+
+.p0c-competition-tables__table--form .p0c-competition-tables__dataset--toggled-hidden, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--toggled-hidden {
+    display: none
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table--form .p0c-competition-tables__dataset--toggled-hidden, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--toggled-hidden {
+        display: table-cell
+    }
+}
+
+@media (min-width: 580px) and (max-width: 739px) {
+    .p0c-competition-tables__table--form .p0c-competition-tables__dataset--nbp-580-740, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--nbp-580-740 {
+        display: none
+    }
+}
+
+.p0c-competition-tables__table--form .p0c-competition-tables__dataset--team, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--team {
+    max-width: 3.125rem
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table--form .p0c-competition-tables__dataset--team, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--team {
+        max-width: 6.25rem
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table--form .p0c-competition-tables__dataset--team, .p0c-competition-tables__table--over-under .p0c-competition-tables__dataset--team {
+        max-width: 12.5rem
+    }
+}
+
+.p0c-competition-tables__table--home-away {
+    font-size: .875rem;
+    table-layout: auto
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table--home-away {
+        table-layout: fixed
+    }
+}
+
+.p0c-competition-tables__table--home-away .p0c-competition-tables__dataset {
+    width: 2.125rem
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset {
+        width: auto
+    }
+
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--primary-group-separator {
+        border-right: 1px solid #e8e8e8
+    }
+
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--secondary-group-separator {
+        border-right: 1px solid #fff
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--total-merged-header {
+        width: 30%
+    }
+}
+
+@media (min-width: 1580px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--total-merged-header {
+        width: auto
+    }
+}
+
+.p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--team {
+    width: 30%;
+    max-width: 9.375rem
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--team {
+        width: 50%
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--team {
+        width: 20%
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--bp-320-740 {
+        display: none
+    }
+}
+
+@media (max-width: 739px) {
+    .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--bp-740, .p0c-competition-tables__table--home-away .p0c-competition-tables__dataset--toggled-hidden {
+        display: none
+    }
+}
+
+.p0c-competition-tables__table--last-matches col.p0c-competition-tables__numeric {
+    width: 3.5%
+}
+
+.p0c-competition-tables__table--last-matches col.p0c-competition-tables__team, .p0c-competition-tables__table--last-matches col.p0c-competition-tables__dataset--team {
+    width: 20%
+}
+
+.p0c-competition-tables__table--last-matches col.p0c-competition-tables__over-under {
+    width: 6%
+}
+
+.p0c-competition-tables__table--last-matches col.p0c-competition-tables__over-under--total {
+    width: 12%
+}
+
+.p0c-competition-tables__table--form-basketball .p0c-competition-tables__head-template, .p0c-competition-tables__table--home-away-basketball .p0c-competition-tables__head-template {
+    display: none
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__table--form-basketball .p0c-competition-tables__head-template, .p0c-competition-tables__table--home-away-basketball .p0c-competition-tables__head-template {
+        display: table-row
+    }
+}
+
+.p0c-competition-tables__table--form-basketball {
+    table-layout: auto
+}
+
+@media (max-width: 479px) {
+    .p0c-competition-tables__table--form-basketball .p0c-competition-tables__row td:nth-of-type(5) {
+        max-width: 3.75rem
+    }
+
+    .p0c-competition-tables__table--form-basketball .p0c-competition-tables__dataset--team {
+        max-width: 4.375rem
+    }
+
+    .p0c-competition-tables__table--form-basketball .p0c-competition-tables__match-status--visual-indicator-last {
+        position: relative
+    }
+
+        .p0c-competition-tables__table--form-basketball .p0c-competition-tables__match-status--visual-indicator-last::after {
+            width: 100%
+        }
+}
+
+@media (max-width: 479px) {
+    .p0c-competition-tables__table--home-away-basketball .p0c-competition-tables__dataset--team {
+        width: 4.375rem;
+        max-width: 4.375rem
+    }
+}
+
+.p0c-competition-tables__table--right-column {
+    background-color: #fff;
+    padding: .625rem;
+    -webkit-box-shadow: 0 0 2px 0 rgba(35,35,35,0.49);
+    box-shadow: 0 0 2px 0 rgba(35,35,35,0.49)
+}
+
+    .p0c-competition-tables__table--right-column h2 {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: .875rem
+    }
+
+    .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr {
+        font-size: .75rem;
+        margin-top: .625rem;
+        width: 100%;
+        border-top: 1px solid rgba(13,66,112,0.4)
+    }
+
+        .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr .p0c-competition-tables__table-wrapper {
+            background-color: #fff
+        }
+
+    .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr--competition-link {
+        color: #000;
+        text-decoration: none
+    }
+
+    .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr thead {
+        background-color: #e6e6e6
+    }
+
+        .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr thead th {
+            height: 1.75rem
+        }
+
+            .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr thead th.p0c-competition-tables__team {
+                width: auto
+            }
+
+            .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr thead th.p0c-competition-tables__head-template-cell {
+                padding-right: .625rem;
+                width: 2.375rem
+            }
+
+            .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr thead th.p0c-competition-tables__head-template-cell--stat {
+                margin-right: .625rem;
+                font-weight: 700
+            }
+
+    .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row td {
+        height: 1.75rem;
+        border: 0;
+        padding-right: .625rem
+    }
+
+        .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row td.p0c-competition-tables__team {
+            width: auto
+        }
+
+            .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row td.p0c-competition-tables__team:hover {
+                color: #fff
+            }
+
+    .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--home:nth-child(n):nth-child(n) {
+        background-color: #3986d1
+    }
+
+.dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--home:nth-child(n):nth-child(n):hover {
+    background-color: #3781c9
+}
+
+.p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--away:nth-child(n):nth-child(n) {
+    background-color: #2cc675
+}
+
+.dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--away:nth-child(n):nth-child(n):hover {
+    background-color: #2abe70
+}
+
+.p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--away:nth-child(n), .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--home:nth-child(n) {
+    font-weight: 700;
+    color: #fff
+}
+
+    .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--away:nth-child(n) .p0c-competition-tables__link, .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--home:nth-child(n) .p0c-competition-tables__link {
+        color: #fff
+    }
+
+.dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--away:nth-child(n) .p0c-competition-tables__link:hover, .dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row--home:nth-child(n) .p0c-competition-tables__link:hover {
+    color: #fff;
+    text-decoration: underline
+}
+
+.dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row .p0c-competition-tables__link:hover {
+    color: #000;
+    text-decoration: underline
+}
+
+.p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row:nth-child(odd) {
+    background-color: #fff
+}
+
+.dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row:nth-child(odd):hover {
+    background-color: #f5f5f5
+}
+
+.p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row:nth-child(even) {
+    background-color: #f5f5f5
+}
+
+.dev-desktop .p0c-competition-tables__table--right-column .p0c-competition-tables__table-rhr tbody .p0c-competition-tables__row:nth-child(even):hover {
+    background-color: #ebebeb
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell {
+    height: 0
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell--stat {
+    width: 1.75rem;
+    padding: 0
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell--stat-bp-740 {
+    display: none
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables th.p0c-competition-tables__head-template-cell--stat-bp-740 {
+        display: table-cell
+    }
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell--team {
+    width: 1.875rem
+}
+
+@media (min-width: 480px) {
+    .p0c-competition-tables th.p0c-competition-tables__head-template-cell--team {
+        width: 6.25rem
+    }
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell--forms-5 {
+    width: 4.375rem
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell--forms-10 {
+    width: 7.8125rem
+}
+
+.p0c-competition-tables th.p0c-competition-tables__head-template-cell--forms-bp-580 {
+    display: none
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables th.p0c-competition-tables__head-template-cell--forms-bp-580 {
+        display: table-cell
+    }
+}
+
+.p0c-competition-tables__match-status {
+    display: inline-block;
+    text-align: center;
+    width: 1.375rem;
+    height: 1.375rem;
+    color: #fff;
+    font-size: .875rem;
+    line-height: 1.375rem;
+    overflow: visible;
+    margin-left: .25rem;
+    position: relative
+}
+
+    .p0c-competition-tables__match-status:first-child {
+        margin-left: 0
+    }
+
+.p0c-competition-tables__match-status--win {
+    background-color: #2ba774
+}
+
+.p0c-competition-tables__match-status--draw {
+    background-color: #ccc
+}
+
+.p0c-competition-tables__match-status--lose {
+    background-color: #d0021b
+}
+
+.p0c-competition-tables__match-status--missing {
+    background-color: #fff
+}
+
+.p0c-competition-tables__match-status--draw {
+    color: #232323
+}
+
+.p0c-competition-tables__match-status--missing {
+    border: 1px solid #cbcbcb
+}
+
+.p0c-competition-tables__match-status--visual-indicator {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: .75rem;
+    height: .75rem;
+    margin: 0 .0625rem
+}
+
+.p0c-competition-tables__match-status--visual-indicator-last::after {
+    content: "";
+    display: block;
+    width: .75rem;
+    height: .125rem;
+    position: absolute;
+    background-color: inherit;
+    top: .8125rem;
+    left: 0
+}
+
+.p0c-competition-tables__match-status--under::before, .p0c-competition-tables__match-status--over::before {
+    font-size: 7px
+}
+
+.p0c-competition-tables__match-status--under {
+    background-color: #d0021b
+}
+
+    .p0c-competition-tables__match-status--under:before {
+        font-family: "mksh-icons";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        direction: ltr;
+        unicode-bidi: embed;
+        content: "\f10b";
+        top: -.125rem
+    }
+
+.p0c-competition-tables__match-status--over {
+    background-color: #2ba774
+}
+
+    .p0c-competition-tables__match-status--over:before {
+        font-family: "mksh-icons";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        direction: ltr;
+        unicode-bidi: embed;
+        content: "\f10c"
+    }
+
+.p0c-competition-tables__row td {
+    border-bottom: 1px solid #f5f5f5
+}
+
+.p0c-competition-tables__row--hidden {
+    display: none
+}
+
+.p0c-competition-tables__row--active {
+    background-color: #ff8100
+}
+
+.p0c-competition-tables__row--highlighted {
+    background-color: rgba(255,129,0,0.1)
+}
+
+.p0c-competition-tables__row--rank-status td:first-child {
+    border-left: 5px solid transparent
+}
+
+.p0c-competition-tables__row--rank-status-1 td:first-child {
+    border-left-color: #5ad586
+}
+
+.p0c-competition-tables__row--rank-status-2 td:first-child {
+    border-left-color: #4990e2
+}
+
+.p0c-competition-tables__row--rank-status-3 td:first-child {
+    border-left-color: #ff7d03
+}
+
+.p0c-competition-tables__row--rank-status-4 td:first-child {
+    border-left-color: #2afffc
+}
+
+.p0c-competition-tables__row--rank-status-5 td:first-child {
+    border-left-color: #07ff3b
+}
+
+.p0c-competition-tables__row--rank-status-6 td:first-child {
+    border-left-color: #3f3cff
+}
+
+.p0c-competition-tables__row--rank-status-7 td:first-child {
+    border-left-color: #bd55ff
+}
+
+.p0c-competition-tables__row--rank-status-relegation td:first-child {
+    border-left-color: #ff232f
+}
+
+.p0c-competition-tables__link {
+    color: #232323;
+    text-decoration: none;
+    -webkit-transition: color .3s;
+    transition: color .3s
+}
+
+.dev-desktop .p0c-competition-tables__link:hover {
+    color: #1f80d1
+}
+
+.p0c-competition-tables__link[href="#"] {
+    pointer-events: none
+}
+
+@media (min-width: 480px) {
+    .p0c-competition-tables__team-name--abbr {
+        display: none
+    }
+}
+
+.p0c-competition-tables__team-name--full {
+    display: none
+}
+
+@media (min-width: 480px) {
+    .p0c-competition-tables__team-name--full {
+        display: inline
+    }
+}
+
+.p0c-competition-tables__legend {
+    background-color: #fff;
+    font-size: .875rem;
+    margin-top: .625rem
+}
+
+.p0c-competition-tables__legend-header {
+    margin: 0;
+    padding: .625rem .9375rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #232323;
+    text-align: left
+}
+
+.p0c-competition-tables__legend-form {
+    display: none
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__legend-form {
+        display: block
+    }
+}
+
+.p0c-competition-tables__legend--hidden {
+    display: none
+}
+
+.p0c-competition-tables__legend-underline {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: .75rem;
+    height: .125rem;
+    background-color: #2ba774;
+    top: 1.1875rem;
+    left: .9375rem
+}
+
+.p0c-competition-tables__rank-status {
+    padding: .3125rem .625rem;
+    margin-bottom: .3125rem;
+    text-align: left;
+    border-left: 5px solid
+}
+
+    .p0c-competition-tables__rank-status:last-child {
+        margin-bottom: 0
+    }
+
+.p0c-competition-tables__rank-status--form-won, .p0c-competition-tables__rank-status--form-drew, .p0c-competition-tables__rank-status--form-lost, .p0c-competition-tables__rank-status--form-latest, .p0c-competition-tables__rank-status--over-under-matches-over, .p0c-competition-tables__rank-status--over-under-matches-under, .p0c-competition-tables__rank-status--over-under-matches-latest {
+    position: relative;
+    border: 0
+}
+
+    .p0c-competition-tables__rank-status--form-won::before, .p0c-competition-tables__rank-status--form-drew::before, .p0c-competition-tables__rank-status--form-lost::before, .p0c-competition-tables__rank-status--form-latest::before, .p0c-competition-tables__rank-status--over-under-matches-over::before, .p0c-competition-tables__rank-status--over-under-matches-under::before, .p0c-competition-tables__rank-status--over-under-matches-latest::before {
+        content: "";
+        display: inline-block;
+        width: .75rem;
+        height: .75rem;
+        margin: 0 .625rem 0 .3125rem;
+        background-color: #2ba774
+    }
+
+.p0c-competition-tables__rank-status--over-under-matches-over, .p0c-competition-tables__rank-status--over-under-matches-under, .p0c-competition-tables__rank-status--over-under-matches-latest {
+    line-height: .625rem
+}
+
+    .p0c-competition-tables__rank-status--over-under-matches-over:after, .p0c-competition-tables__rank-status--over-under-matches-under:after, .p0c-competition-tables__rank-status--over-under-matches-latest:after {
+        font-family: "mksh-icons";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        direction: ltr;
+        unicode-bidi: embed;
+        content: "\f10c"
+    }
+
+    .p0c-competition-tables__rank-status--over-under-matches-over::after, .p0c-competition-tables__rank-status--over-under-matches-under::after, .p0c-competition-tables__rank-status--over-under-matches-latest::after {
+        position: absolute;
+        left: 1.125rem;
+        top: .375rem;
+        font-size: 7px;
+        color: #fff
+    }
+
+    .p0c-competition-tables__rank-status--over-under-matches-under::before {
+        background-color: #d0021b
+    }
+
+    .p0c-competition-tables__rank-status--over-under-matches-under:after {
+        font-family: "mksh-icons";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        direction: ltr;
+        unicode-bidi: embed;
+        content: "\f10b"
+    }
+
+    .p0c-competition-tables__rank-status--over-under-matches-under::after {
+        top: .375rem
+    }
+
+.p0c-competition-tables__rank-status--form-drew::before {
+    background-color: #ccc
+}
+
+.p0c-competition-tables__rank-status--form-lost::before {
+    background-color: #d0021b
+}
+
+.p0c-competition-tables__rank-status--form-latest::after {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: .75rem;
+    height: .125rem;
+    background-color: #2ba774;
+    top: 1.25rem;
+    left: .9375rem
+}
+
+.p0c-competition-tables__rank-status--1 {
+    border-left-color: #5ad586
+}
+
+.p0c-competition-tables__rank-status--2 {
+    border-left-color: #4990e2
+}
+
+.p0c-competition-tables__rank-status--3 {
+    border-left-color: #ff7d03
+}
+
+.p0c-competition-tables__rank-status--4 {
+    border-left-color: #2afffc
+}
+
+.p0c-competition-tables__rank-status--5 {
+    border-left-color: #07ff3b
+}
+
+.p0c-competition-tables__rank-status--6 {
+    border-left-color: #3f3cff
+}
+
+.p0c-competition-tables__rank-status--7 {
+    border-left-color: #bd55ff
+}
+
+.p0c-competition-tables__rank-status--relegation {
+    border-left-color: #ff232f
+}
+
+.p0c-competition-tables__crest {
+    width: 1.555rem;
+    height: 1.555rem;
+    vertical-align: bottom;
+    margin-right: .3125rem
+}
+
+@media (min-width: 480px) {
+    .p0c-competition-tables__crest {
+        margin-right: .625rem
+    }
+}
+
+.p0c-competition-tables__plus-minus {
+    display: none
+}
+
+.p0c-competition-tables__filter-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    text-transform: uppercase;
+    width: 100%;
+    color: #fff;
+    font-weight: 500;
+    font-size: .875rem;
+    padding: .625rem
+}
+
+.p0c-competition-tables__filter-dropdown {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 100%;
+    flex: 1 1 100%;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse
+}
+
+.p0c-competition-tables__no-data {
+    text-align: center;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: .9375rem;
+    font-weight: 700;
+    background-color: #fff;
+    color: #232323;
+    font-size: .875rem
+}
+
+.p0c-competition-tables__h2h-container {
+    width: 100%;
+    padding: 0 0 .625rem 0
+}
+
+    .p0c-competition-tables__h2h-container::after {
+        clear: both;
+        content: "";
+        display: table
+    }
+
+.p0c-competition-tables__h2h-container--hidden {
+    display: none
+}
+
+.p0c-competition-tables__tabs th {
+    padding: 0
+}
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__tabs--form, .p0c-competition-tables__tabs--over-under {
+        display: none
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__tabs--home-away {
+        display: none
+    }
+}
+
+.p0c-competition-tables__main-head-bp-580, .p0c-competition-tables__main-head-bp-740 {
+    background-color: #fff;
+    text-align: center;
+    color: #232323;
+    font-weight: 700;
+    font-size: .875rem;
+    display: none
+}
+
+    .p0c-competition-tables__main-head-bp-580 th, .p0c-competition-tables__main-head-bp-740 th {
+        height: 2.0625rem
+    }
+
+@media (min-width: 580px) {
+    .p0c-competition-tables__main-head-bp-580 {
+        display: table-row
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__main-head-bp-580 {
+        display: none
+    }
+}
+
+@media (min-width: 740px) {
+    .p0c-competition-tables__main-head-bp-740 {
+        display: table-row
+    }
+}
+
+.p0c-competition-tables__sub-head {
+    background-color: #e8e8e8;
+    text-align: center;
+    color: #232323;
+    font-weight: 700;
+    font-size: .875rem
+}
+
+    .p0c-competition-tables__sub-head th {
+        height: 2.0625rem
+    }
+
+.p0c-competition-tables__sub-head-team {
+    text-align: left
+}
+
+.p0c-competition-tables__rank-change {
+    display: inline-block;
+    position: relative
+}
+
+    .p0c-competition-tables__rank-change::before {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0
+    }
+
+.p0c-competition-tables__rank-change--up::before {
+    border-width: 0 .375rem .375rem .375rem;
+    border-color: transparent transparent #2ba774
+}
+
+.p0c-competition-tables__rank-change--down::before {
+    border-width: .375rem .375rem 0 .375rem;
+    border-color: #d0021b transparent transparent
+}
+
+.p0c-competition-tables__show-more-button {
+    font-size: .875rem;
+    font-weight: 500;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #fff;
+    border-top: 1px solid #f5f5f5;
+    padding: .6875rem .625rem .75rem;
+    cursor: pointer;
+    -webkit-transition: color .3s;
+    transition: color .3s
+}
+
+    .p0c-competition-tables__show-more-button:before {
+        font-family: "mksh-icons";
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        -webkit-font-feature-settings: normal;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        direction: ltr;
+        unicode-bidi: embed;
+        content: "\f10e";
+        color: #1f80d1;
+        font-size: .625rem;
+        margin: .1875rem .3125rem 0 0
+    }
+
+.dev-desktop .p0c-competition-tables__show-more-button:hover {
+    color: #1f80d1
+}
+
+.p0c-competition-tables__show-more-button--less:before {
+    font-family: "mksh-icons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-feature-settings: normal;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    direction: ltr;
+    unicode-bidi: embed;
+    content: "\f10f";
+    color: #1f80d1;
+    font-size: .625rem;
+    margin-right: .3125rem
+}
+
+.p0c-competition-tables__show-more-button--hidden {
+    display: none
+}
+
+.p0c-competition-tables__h2h-checkbox {
+    display: none
+}
+
+.p0c-competition-tables__comp-group-name {
+    padding: .625rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: .875rem;
+    background-color: #fff;
+    color: #232323;
+    text-align: left
+}
+
+.p0c-competition-tables__group {
+    margin-bottom: 1.25rem
+}
+
+    .p0c-competition-tables__group:last-child {
+        margin-bottom: 0
+    }
+
+.p0c-competition-tables__over-under {
+    white-space: nowrap;
+    font-size: 0;
+    line-height: 0
+}
+
+    .p0c-competition-tables__over-under span {
+        width: 1em;
+        font-size: .875rem;
+        line-height: 1;
+        display: inline-block;
+        text-align: center
+    }
+
+.p0c-competition-tables__forms-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.container {
+  position: relative;
+  width: 50%;
+}
+
+/* Make the image responsive */

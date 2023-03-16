@@ -1,0 +1,509 @@
+﻿@page "/WeeksMatches"
+@page "/WeeksMatches/{UserId}"
+
+<PageTitle>Haftanın maçları</PageTitle>
+
+@using Microsoft.Data.SqlClient
+@using MauiApp4.Data;
+@using Newtonsoft.Json.Linq
+@using RestSharp
+@using MauiApp4.Data
+@using System.IO
+@using System.Data
+@inject IJSRuntime JS
+@inject NavigationManager navManager
+
+@using Newtonsoft.Json;
+@using System.Globalization
+@using System.Text
+@using System.Drawing
+@using MauiApp4.Pages
+
+.
+@*<h3>@date @time @username @currentdatestr</h3>*@
+@*<EditForm Model="@weeknames">
+	@*<InputSelect id="input" @bind-Value="Prop" onchange="@CheckBoxChanged">
+
+		@foreach (var template in weeknames)
+		{
+			<option value=@template>@template</option>
+		}
+	</InputSelect>*@
+@*<input id="input" type="datetime" @bind="Prop2" >
+			</input>*@
+<div class="widget-dateslider" data-module="dateslider" data-module-loaded="true">
+	<button class="widget-dateslider__arrow widget-dateslider__arrow--previous" @onclick='()=>ClickBackForward("back")'>&#60;</button> <div class=" widget-dateslider__slider">
+		<ol class="widget-dateslider__dates" style="transform: translate3d(0px, 0px, 0px);">
+			<!---->
+			<!---->
+			@foreach (Date date in dates)
+			{
+				<li class="@date.Class" @onclick="()=>CheckBoxChanged(date.Id)" id="widget-dateslider-day-2023-02-13" data-date="2023-02-13">
+					<span class="widget-dateslider__day-name"><!---->@currentdate.AddDays(date.Id).ToString("ddd",new CultureInfo("tr"))<!----></span>
+					<span class="widget-dateslider__day-date" id="@date.Id"><!---->@currentdate.AddDays(date.Id).ToString("dd.MM")<!----></span>
+				</li>
+			}
+			<!---->
+			<!---->
+		</ol>
+	</div> <button class="widget-dateslider__datepicker-toggle"></button> <button class="widget-dateslider__arrow widget-dateslider__arrow--next" @onclick='()=>ClickBackForward("next")'>&#62;</button> <div class="widget-dateslider__datepicker"> <div data-module="datepicker" class="widget-datepicker" data-module-loaded="true"> <div class="widget-datepicker__header"> <div class="widget-datepicker__selector widget-datepicker__selector--month"> <div class="widget-datepicker__nav widget-datepicker__nav--previous"></div> <div class="widget-datepicker__value">Şub</div> <div class="widget-datepicker__nav widget-datepicker__nav--next"></div> </div> <div class="widget-datepicker__selector widget-datepicker__selector--year"> <div class="widget-datepicker__nav widget-datepicker__nav--previous"></div> <div class="widget-datepicker__value">2023</div> <div class="widget-datepicker__nav widget-datepicker__nav--next"></div> </div> </div> <div class="widget-datepicker__body"> <table class="widget-datepicker__calendar"> <thead class="widget-datepicker__calendar-header"> <tr class="widget-datepicker__calendar-header-row">  <th class="widget-datepicker__calendar-header-cell">Pt</th>  <th class="widget-datepicker__calendar-header-cell">Sa</th>  <th class="widget-datepicker__calendar-header-cell">Ça</th>  <th class="widget-datepicker__calendar-header-cell">Pe</th>  <th class="widget-datepicker__calendar-header-cell">Cu</th>  <th class="widget-datepicker__calendar-header-cell">Ct</th>  <th class="widget-datepicker__calendar-header-cell">Pz</th>  </tr> </thead>  <tbody class="widget-datepicker__calendar-body">  <tr class="widget-datepicker__calendar-body-row">  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-01-30">30</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-01-31">31</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-01">1</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-02">2</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-03">3</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-04">4</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-05">5</td>  </tr>  <tr class="widget-datepicker__calendar-body-row">  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-06">6</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-07">7</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-08">8</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-09">9</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-10">10</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-11">11</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-12">12</td>  </tr>  <tr class="widget-datepicker__calendar-body-row">  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-13">13</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-14">14</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-15">15</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-16">16</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--current-day widget-datepicker__calendar-body-cell--selected-day" data-date="2023-02-17">17</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-18">18</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-19">19</td>  </tr>  <tr class="widget-datepicker__calendar-body-row">  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-20">20</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-21">21</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-22">22</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-23">23</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-24">24</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-25">25</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-26">26</td>  </tr>  <tr class="widget-datepicker__calendar-body-row">  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-27">27</td>  <td class="widget-datepicker__calendar-body-cell" data-date="2023-02-28">28</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-01">1</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-02">2</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-03">3</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-04">4</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-05">5</td>  </tr>  <tr class="widget-datepicker__calendar-body-row">  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-06">6</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-07">7</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-08">8</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-09">9</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-10">10</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-11">11</td>  <td class="widget-datepicker__calendar-body-cell widget-datepicker__calendar-body-cell--not-month-day" data-date="2023-03-12">12</td>  </tr>  </tbody></table> </div> <div class="widget-datepicker__footer"> <a class="widget-datepicker__button widget-datepicker__button--today" data-date="2023-02-17"> Bugün </a> </div> </div> </div>
+</div>
+<br />
+<br />
+@if (matches.Count == 0)
+{
+	<div class="match-row" width="1000px">
+		<div class="match-row__match-content">
+
+
+			<div class="match-row__middle">
+				<div class="match-row__middle-container">
+					<h3 style="text-align:center">Bugün maç yok</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+}
+@foreach (Match match in matches)
+{
+	<div class="match-row" style="background:@CalculateColor(match);    line-height: 1.375rem;">
+		<div class="match-row__match-content">
+
+
+			<div class="match-row__middle">
+				<div class="match-row__middle-container">
+					<a style="float:left">
+
+						<label style="position:absolute;top:7px"> @match.Date.ToString("HH:mm")</label>
+
+					</a>
+					<a class="match-row__team-name match-row__team-name--home">
+
+						<label style="position:relative;top:6px;" id="teamfull" class="match-row__team-name-text" for="number">@match.HomeTeam.TeamName</label>
+						<label style="position:relative;top:6px;" id="teamabbr" class="match-row__team-name-text" for="number">@match.HomeTeam.TeamAbbr</label>
+						<img class="match-row__team-crest match-row__team-crest--home" width="35px" height="35px" src="https://raw.githubusercontent.com/R-Fatih/ACCDB/main/Logos/TeamLogos/ @match.HomeTeam.TeamId-.png">
+
+					</a>
+
+					<a class="match-row__team-name2">
+
+
+						@if (GetDifference(@match.Date.ToString("dd MMMM yyyy|HH.mm",new CultureInfo("tr"))))
+						{
+							<input min="0" id="mc1" @onchange="@((e) => { @match.Prediction.HomeScore=Convert.ToInt32(e.Value);})" type="number" value="@match.Prediction.HomeScore">
+						}
+						else
+						{
+							<input min="0" id="mc1" @onchange="@((e) => { @match.Prediction.HomeScore=Convert.ToInt32(e.Value);})" type="number" value="@match.Prediction.HomeScore" disabled>
+						}
+					</a>
+					<a class="match-row__team-name2">
+						@if (GetDifference(@match.Date.ToString("dd MMMM yyyy|HH.mm",new CultureInfo("tr"))))
+						{
+							<input min="0" id="mc2" @onchange="@((e) => { @match.Prediction.AwayScore=Convert.ToInt32(e.Value);})" type="number" value="@match.Prediction.AwayScore">
+						}
+						else
+						{
+							<input min="0" id="mc2" @onchange="@((e) => { @match.Prediction.AwayScore=Convert.ToInt32(e.Value);})" type="number" value="@match.Prediction.AwayScore" disabled>
+
+						}
+
+					</a>
+
+					<a class="match-row__team-name match-row__team-name--away">
+						<img class="match-row__team-crest match-row__team-crest--away" width="35px" height="35px" src="https://raw.githubusercontent.com/R-Fatih/ACCDB/main/Logos/TeamLogos/ @match.AwayTeam.TeamId-.png">
+						<label style="position:relative;top:6px;" id="teamfull" class="match-row__team-name-text" for="number"> @match.AwayTeam.TeamName</label>
+						<label style="position:relative;top:6px;" id="teamabbr" class="match-row__team-name-text" for="number"> @match.AwayTeam.TeamAbbr</label>
+						<a style="float:right">
+							<label style="position:relative;top:6px;">@match.HomeMS-@match.AwayMS</label>
+							<label id="leagueabbr" style="position:relative;top:6px;">@match.League.LeagueAbbr</label>
+
+							<img id="league" style="heigth:0" class="match-row__team-crest match-row__team-crest--home" width="35px" height="35px" src="https://raw.githubusercontent.com/R-Fatih/ACCDB/main/Logos/LeagueLogos/ @match.League.LeagueId-.png">
+						</a>
+					</a>
+
+				</div>
+
+			</div>
+
+			<br />
+		</div>
+
+	</div>
+}
+<br />
+<div class="text-center">
+
+	<button class="btn btn-primary" style="text-align:center" onclick="@buttonOnClick">Kaydet</button>
+</div>
+
+@code {
+	string selectedweek;
+	string nowweek;
+	DateTime currentdate = DateTime.Today.AddDays(-3);
+	DateTime datea = DateTime.Today;
+
+	string currentdatestr;
+	string time, date;
+	int selection = 0;
+	double timeSpan = 0, timesaat = 0, timedakika = 0;
+	SqlConnector sqlConnector = new SqlConnector();
+	[Inject]
+	public IJSRuntime JSRuntime { get; set; }
+
+	public User user;
+	string username;
+	string auth;
+	private RenderFragment DynamicFragment;
+	public string NWeek { get; set; }
+	public string Prop2 { get; set; }
+
+	public string Prop
+	{
+		get { return NWeek; }
+		set
+		{
+			NWeek = value;
+			//CheckBoxChanged(i);
+
+		}
+	}
+	public string ab { get; set; }
+	string bein = "https://media01.tr.beinsports.com/img/teams/1/";
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		string strclas;
+		//User = myStateContainer.Value;
+		//username = User.UserName;
+
+		for (int i = 0; i < 7; i++)
+		{
+			if (i == 3 && currentdate == datea.AddDays(-3))
+				strclas = "widget-dateslider__date widget-dateslider__date--selected";
+			else
+				strclas = "widget-dateslider__date";
+			Date dateaa = new Date(i, strclas);
+			dates.Add(dateaa);
+		}
+	}
+	string a, url, url2, weekname, weekcode, wee;
+	List<Match> matches = new List<Match>();
+	List<Date> dates = new List<Date>();
+
+	[Parameter]
+	public string? UserId { get; set; }
+
+	List<string> teamnames = new List<string>();
+	List<string> teamcodes = new List<string>();
+	[JSInvokable]
+	public void ChangeParaContentValue(string value)
+	{
+		currentdatestr = value;
+	}
+	public void GotoIndex()
+	{
+		navManager.NavigateTo("");
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		user = new User();
+		try
+		{
+			user.UserId = Convert.ToInt32( Preferences.Get("UserId", "0"));
+
+
+
+		}
+		catch (Exception)
+		{
+			//navManager.NavigateTo("");
+
+		}
+		//	User.Auth = Convert.ToBoolean(auth);
+		// var result = await BrowserStorage.GetAsync<string>("UserName");
+		//     string  auth = result.Success ? result.Value : "false";
+
+		//ab = localStorage.GetItemAsStringAsync("Auth").Result;
+
+
+
+		//Console.WriteLine("Wc"+weekcodes.Count);
+		//Console.WriteLine("Wn"+weeknames.Count);
+
+
+		matches.Clear();
+		GetTime();
+		try
+		{
+
+
+			GetMatches();
+
+
+			//sqlConnector.Connection().Open();
+			//DateTime dt = DateTime.Now;
+			//SqlCommand sqlCommand = new SqlCommand("update Standings set Version='WEB',LastEnter='" + dt.ToString("G") + "' where UserName='" + username + "'", sqlConnector.Connection());
+			//SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+
+			//sqlConnector.Connection().Close();
+		}
+		catch (Exception ex)
+		{
+			JS.InvokeVoidAsync("alertmes", ex.Message);
+			//navManager.NavigateTo("");
+
+
+		}
+		//RenderComponent();
+	}
+
+	public void GetMatches()
+	{
+		//DateTime date = DateTime.Today;
+		//date = date.AddDays(5);
+
+		try
+		{
+			//JS.InvokeVoidAsync("alertmes", "select Matches.MatchId,Date, HomeTeamId,TeamName as 'HomeName',AwayTeamId,(select TeamName from Teams where TeamId=AwayTeamId )as 'AwayName',HomeMS,AwayMS,LeagueId,PredictionId,HomeScore,AwayScore from Matches  inner join LeagueData on LeagueData.CountryId=Matches.CountryId full outer join Predictions on Predictions.MatchId=Matches.MatchId inner join Teams on Matches.HomeTeamId=Teams.TeamId where LeagueData.UserId=" + user.UserId + " and (DATEPART(yy, Date) = " + datea.ToString("yyyy") + " AND DATEPART(mm, Date) = " + datea.ToString("MM") + " AND DATEPART(dd, Date) = " + datea.ToString("dd") + ") order by Date asc");
+			if (sqlConnector.Connection().State != ConnectionState.Open)
+
+				sqlConnector.Connection().Open();
+			SqlCommand sqlCommand = new SqlCommand("select Matches.MatchId,Date, HomeTeamId,TeamName as 'HomeName',AwayTeamId,(select TeamName from Teams where TeamId=AwayTeamId )as 'AwayName',(select TeamAbbr from Teams where TeamId=HomeTeamId )as 'HomeTeamAbbr',(select TeamAbbr from Teams where TeamId=AwayTeamId )as 'AwayTeamAbbr',HomeMS,AwayMS,Matches.LeagueId,LeagueAbbr,PredictionId,HomeScore,AwayScore,LeagueData.UserId from Matches inner join Leagues on Leagues.LeagueId=Matches.LeagueId  inner join LeagueData on LeagueData.CountryId=Matches.CountryId full outer join Predictions on Predictions.MatchId=Matches.MatchId and Predictions.UserId=" + user.UserId + " inner join Teams on Matches.HomeTeamId=Teams.TeamId where LeagueData.UserId=" + user.UserId + " and (DATEPART(yy, Date) = " + datea.ToString("yyyy") + " AND DATEPART(mm, Date) = " + datea.ToString("MM") + " AND DATEPART(dd, Date) = " + datea.ToString("dd") + ") order by Date asc", sqlConnector.Connection());
+			SqlDataReader dataReader = sqlCommand.ExecuteReader();
+			while (dataReader.Read())
+			{
+				//if(dataReader["PredictionId"]==DBNull.Value)
+				//JS.InvokeVoidAsync("alertmes", "Evet");
+				//else
+				//	JS.InvokeVoidAsync("alertmes", "Hayıt");
+
+				Match match = new Match(
+					new Team(Convert.ToInt32(dataReader["HomeTeamId"].ToString()), dataReader["HomeName"].ToString(), dataReader["HomeTeamAbbr"].ToString()),
+					new Team(Convert.ToInt32(dataReader["AwayTeamId"].ToString()), dataReader["AwayName"].ToString(), dataReader["AwayTeamAbbr"].ToString()),
+				Convert.ToDateTime(dataReader["Date"].ToString()),
+			(dataReader["HomeMS"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["HomeMS"].ToString()),
+			(dataReader["AwayMS"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["AwayMS"].ToString()),
+				new League(Convert.ToInt32(dataReader["LeagueId"].ToString()), dataReader["LeagueAbbr"].ToString()),
+				new Prediction(
+					(dataReader["PredictionId"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["PredictionId"].ToString()),
+					(dataReader["HomeScore"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["HomeScore"].ToString()),
+					(dataReader["AwayScore"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["AwayScore"].ToString())
+					, Convert.ToInt32(dataReader["MatchId"].ToString()), Convert.ToInt32(dataReader["UserId"].ToString())
+	)
+			);
+				matches.Add(match);
+			}
+
+			if (sqlConnector.Connection().State == ConnectionState.Open)
+				sqlConnector.Connection().Close();
+		}
+		catch (Exception e)
+		{
+
+			JS.InvokeVoidAsync("alertmes", e.Message);
+		}
+	}
+
+	public void ClickBackForward(string para)
+	{
+		if (para == "back")
+			currentdate = datea.AddDays(-3);
+		if (para == "next")
+			currentdate = datea.AddDays(+3);
+
+	}
+	public async Task CheckBoxChanged(int i)
+	{
+		var interopResult =
+			await JS.InvokeAsync<string>("getLI", i);
+		currentdatestr = interopResult;
+		datea = DateTime.ParseExact(currentdatestr, "dd.MM", new CultureInfo("tr"));
+		currentdate = datea.AddDays(-3);
+		//currentdatestr =JS.InvokeAsync<string>("getLI", i).Result;
+		//Console.WriteLine(a);
+		//currentdatestr = a.ToString();
+		matches.Clear();
+		GetTime();
+		//GetDifference("16 Şubat 2023|16.00");
+		GetMatches();
+
+
+
+
+	}
+	void GetTime()
+	{
+		var client = new RestClient("https://www.timeapi.io/api/Time/current/zone?timeZone=Europe/Istanbul");
+		var request = new RestRequest("");
+		var response = client.Execute(request);
+		var json = response.Content;
+		JObject jObject = JObject.Parse(json);
+
+		time = jObject["dateTime"].ToString();
+		//date = jObject["date"].ToString();
+
+	}
+	public bool GetDifference(string tarih2)
+	{
+
+
+		try
+		{
+			//var time = (DateTime.Now - new DateTime(1970, 1, 1));
+
+			DateTime d1 = DateTime.Parse(time + "");
+
+			DateTime d2 = DateTime.ParseExact(tarih2, "dd MMMM yyyy|HH.mm", new CultureInfo("tr"));
+			//Console.WriteLine(	"d1:"+d1+"\nd2:"+d2);
+			double t = (d2 - new DateTime(1970, 1, 1)).TotalMilliseconds + 0.5;
+			double t2 = (d1 - new DateTime(1970, 1, 1)).TotalMilliseconds + 0.5;
+			double difference_In_Time
+					= t - t2;
+			double difference_In_Seconds
+					= (difference_In_Time
+					/ 1000)
+					% 60;
+			double difference_In_Minutes
+					= (difference_In_Time
+					/ (1000 * 60))
+					% 60;
+			double difference_In_Hours
+					= (difference_In_Time
+					/ (1000 * 60 * 60))
+					% 24;
+			double difference_In_Years
+					= (difference_In_Time
+					/ (1000l * 60 * 60 * 24 * 365));
+
+			double difference_In_Days
+					= (difference_In_Time
+					/ (1000 * 60 * 60 * 24))
+					% 365;
+			timeSpan = difference_In_Days;
+			timesaat = difference_In_Hours;
+			timedakika = difference_In_Minutes;
+			//Console.WriteLine(timeSpan + " " + timesaat + " " + timedakika);
+		}
+		catch (Exception ex) { Console.WriteLine(ex.Message); }
+		if (timeSpan < 0)
+		{
+			return false;
+		}
+
+		else if (timeSpan == 0 && timesaat <= 0 && timedakika <= 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+
+
+
+	}
+
+	void dateChanged(string date)
+	{
+
+	}
+	void buttonOnClick()
+	{
+		for (int i = 0; i < matches.Count; i++)
+		{
+			DateTime dateTime = DateTime.Now;
+			if (matches[i].Prediction.HomeScore != null && matches[i].Prediction.AwayScore != null && GetDifference(matches[i].Date.ToString("dd MMMM yyyy|HH.mm", new CultureInfo("tr"))))
+			{
+				if (CheckPrediction(matches[i].Prediction.PredictionId))
+				{
+					sqlConnector.Connection().Open();
+
+					SqlCommand sqlCommand1 = new SqlCommand("update Predictions set HomeScore=@p1,AwayScore=@p2,PredictionTime=@p3 where PredictionId=@p4 and UserId=@p5 and MatchId=@p6", sqlConnector.Connection());
+					sqlCommand1.Parameters.AddWithValue("@p1", matches[i].Prediction.HomeScore);
+					sqlCommand1.Parameters.AddWithValue("@p2", matches[i].Prediction.AwayScore);
+					sqlCommand1.Parameters.AddWithValue("@p3", dateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+					sqlCommand1.Parameters.AddWithValue("@p4", matches[i].Prediction.PredictionId);
+					sqlCommand1.Parameters.AddWithValue("@p5", matches[i].Prediction.UserId);
+					sqlCommand1.Parameters.AddWithValue("@p6", matches[i].Prediction.MatchId);
+
+					sqlCommand1.ExecuteNonQuery();
+					sqlConnector.Connection().Close();
+				}
+				else
+				{
+					sqlConnector.Connection().Open();
+					SqlCommand sqlCommand = new SqlCommand("insert into Predictions (HomeScore,AwayScore,MatchId,UserId,PredictionTime) values (@p1,@p2,@p3,@p4,@p5)", sqlConnector.Connection());
+					sqlCommand.Parameters.AddWithValue("@p1", matches[i].Prediction.HomeScore);
+					sqlCommand.Parameters.AddWithValue("@p2", matches[i].Prediction.AwayScore);
+					sqlCommand.Parameters.AddWithValue("@p3", matches[i].Prediction.MatchId);
+					sqlCommand.Parameters.AddWithValue("@p4", matches[i].Prediction.UserId);
+					sqlCommand.Parameters.AddWithValue("@p5", dateTime.ToString("yyyy-MM-dd hh:mm:ss"));
+					sqlCommand.ExecuteNonQuery();
+					sqlConnector.Connection().Close();
+				}
+
+			}
+		}
+		JS.InvokeVoidAsync("alertmes", "Maç(lar) başarıyla kaydedildi.");
+		GetMatches();
+	}
+
+	public bool CheckPrediction(int? predictionId)
+	{
+		return predictionId != null;
+	}
+	string CalculateColor(Match match)
+	{
+		Color color = Color.White;
+		String ms = match.HomeMS.ToString()+"-"+match.AwayMS.ToString();
+		String tahmin = match.Prediction.HomeScore.ToString()+"-"+match.Prediction.AwayScore.ToString();
+		if (ms!="-"&&(ms.Equals(tahmin)))
+		{
+			color = Color.FromArgb(204, 250, 221);
+
+
+		}
+		try
+		{
+			if (!ms.Split("-")[0].Equals(ms.Split("-")[1]))
+			{
+				if (!tahmin.Split("-")[0].Equals(tahmin.Split("-")[1]))
+				{
+
+					if (ms.Split("-")[0].Equals(tahmin.Split("-")[0]) && Convert.ToInt16(ms.Split("-")[1]) - Convert.ToInt16(tahmin.Split("-")[1]) == 1)
+					{
+						color = Color.FromArgb(255, 255, 203);
+
+
+					}
+					if (ms.Split("-")[1].Equals(tahmin.Split("-")[1]) && Convert.ToInt16(ms.Split("-")[0]) - Convert.ToInt16(tahmin.Split("-")[0]) == 1)
+					{
+						color = Color.FromArgb(255, 255, 203);
+
+					}
+					if (ms.Split("-")[0].Equals(tahmin.Split("-")[0]) && Convert.ToInt16(ms.Split("-")[1]) - Convert.ToInt16(tahmin.Split("-")[1]) == -1)
+					{
+						color = Color.FromArgb(255, 255, 203);
+
+					}
+					if (ms.Split("-")[1].Equals(tahmin.Split("-")[1]) && Convert.ToInt16(ms.Split("-")[0]) - Convert.ToInt16(tahmin.Split("-")[0]) == -1)
+					{
+						color = Color.FromArgb(255, 255, 203);
+
+					}
+				}
+			}
+
+
+		}
+		catch (Exception ex)
+		{
+
+		}
+		Class1 class1 = new Class1();
+		return class1.ColorToHex(color);
+	}
+
+}

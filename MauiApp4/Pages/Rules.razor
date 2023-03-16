@@ -1,0 +1,169 @@
+﻿@page "/Rules"
+@using MauiApp4.Data
+@using System.Text
+
+
+@*<h5>
+	Müsabakalar:
+</h5><img width="50px;" height="50px" src="SL .png"
+<img width="50px;" height="50px" src="ZTK .png"
+<img width="50px;" height="50px" src="WC .png"
+<img width="50px;" height="50px" src="UCL .png"
+<img width="50px;" height="50px" src="UEL .png"
+<img width="50px;" height="50px" src="UECL .png"
+<br />
+<br />
+<h5>
+	Amaç:
+</h5>
+<h6>Maç skorlarını tahmin etmek</h6>
+
+<h5>
+	Puanlama:
+</h5>
+<h6>Tam tahmin 3, Yakın tahmin 1 puan</h6>
+<h5>
+Örnek Puanlama:
+</h5>
+<h6>Alacağınız puan: @ponint</h6>*@
+@*
+<div class="match-row" style=" line-height: 1.375rem;">
+	<div class="match-row__match-content">
+
+
+		<div class="match-row__middle">
+			<div class="match-row__middle-container">
+				<a style="float:left">
+
+					<label style="position:absolute;top:7px">@match.date.Substring(@match.date.ToString().IndexOf('|')+1,5)</label>
+
+				</a>
+				<a class="match-row__team-name match-row__team-name--home">
+
+					<label style="position:relative;top:6px;" class="match-row__team-name-text" for="number">@match.home</label>
+					<img class="match-row__team-crest match-row__team-crest--home" width="35px" height="35px" src="@match.hometeamid">
+
+				</a>
+
+				<a class="match-row__team-name2">
+
+					@if (@match.username.Contains("-"))
+					{
+						
+							<input min="0" id="mc1" @onchange="@((e) => {
+
+
+
+            StringBuilder sb = new StringBuilder(@match.username.Split('-')[0]);
+            sb[0] =Convert.ToChar(e.Value);
+            @match.username = sb.ToString() + "-" + @match.username.Split('-')[1];
+				sb.Clear();
+				onchange();
+})" type="number" value="@match.username.Split('-')[0]">
+						
+
+					}
+					else{
+
+						<input min="0" id="mc1" @onchange="@((e) => { @match.username=(string)e.Value+"- ";onchange();})" type="number" value="">
+						
+					}
+
+
+				</a>
+				<a class="match-row__team-name2">
+					@if (@match.username.Contains("-")){
+					
+							<input min="0" id="mc2" @onchange="@((e) => {
+
+            StringBuilder sb = new StringBuilder(@match.username.Split('-')[1]);
+            sb[0] = Convert.ToChar(e.Value);
+            @match.username = @match.username.Split('-')[0] + "-" + sb.ToString();
+								sb.Clear();
+								onchange();
+							})" type="number" value="@match.username.Split('-')[1]">
+						
+					}
+					else
+					{
+						<input min="0" id="mc2" @onchange="@((e) => { @match.username=" -"+(string)e.Value;onchange();})" type="number" value="">
+						
+					}
+				</a>
+
+				<a class="match-row__team-name match-row__team-name--away">
+					<img class="match-row__team-crest match-row__team-crest--away" width="35px" height="35px" src="@match.awayteamid">
+
+					<label style="position:relative;top:6px;" class="match-row__team-name-text" for="number">@match.away</label>
+					<a style="float:right">
+						<label style="vertical-align: middle;">@match.ms</label>
+
+						<img style="heigth:0" class="match-row__team-crest match-row__team-crest--home" width="35px" height="35px" src="@match.competition .png">
+					</a>
+				</a>
+
+			</div>
+
+		</div>
+
+		<br />
+	</div>
+
+</div>
+@code{
+	Match match = new Match("Beşiktaş", "Fenerbahçe", "20 Eylül 2023|20.00", "125123", "2-1", "1-1", "https://media03.tr.beinsports.com/img/teams/1/3.png", "https://media03.tr.beinsports.com/img/teams/1/F425.png","SL","");
+	string ponint="0";
+	void onchange(){
+		ponint = CalculateColor(match);
+	}
+	string CalculateColor(Match match)
+	{
+		string res="0";
+		String ms = match.ms.ToString();
+		String tahmin = match.username.ToString();
+		if ((ms.Equals(tahmin)))
+		{
+			res = "3";
+
+
+		}
+		try
+		{
+			if (!ms.Split("-")[0].Equals(ms.Split("-")[1]))
+			{
+				if (!tahmin.Split("-")[0].Equals(tahmin.Split("-")[1]))
+				{
+
+					if (ms.Split("-")[0].Equals(tahmin.Split("-")[0]) && Convert.ToInt16(ms.Split("-")[1]) - Convert.ToInt16(tahmin.Split("-")[1]) == 1)
+					{
+						res = "1";
+
+
+					}
+					if (ms.Split("-")[1].Equals(tahmin.Split("-")[1]) && Convert.ToInt16(ms.Split("-")[0]) - Convert.ToInt16(tahmin.Split("-")[0]) == 1)
+					{
+						res = "1";
+
+					}
+					if (ms.Split("-")[0].Equals(tahmin.Split("-")[0]) && Convert.ToInt16(ms.Split("-")[1]) - Convert.ToInt16(tahmin.Split("-")[1]) == -1)
+					{
+						res = "1";
+
+					}
+					if (ms.Split("-")[1].Equals(tahmin.Split("-")[1]) && Convert.ToInt16(ms.Split("-")[0]) - Convert.ToInt16(tahmin.Split("-")[0]) == -1)
+					{
+						res = "1";
+
+					}
+				}
+			}
+
+
+		}
+		catch (Exception ex)
+		{
+
+		}
+		return res;
+	}
+}*@

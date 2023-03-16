@@ -1,0 +1,146 @@
+﻿@page "/MatchDetails"
+@using MauiApp4.Data
+@using Microsoft.Data.SqlClient
+
+@inject IJSRuntime JS
+
+<h5 style="text-align:center">@userName  kullanıcısının puan aldığı maçlar</h5>
+	
+
+
+
+
+<table class="wikitable" border="1" cellspacing="0" cellpadding="0" style="border-collapse: collapse;">
+
+<tbody><tr>
+<th align="right" width="200">Tarih
+</th>
+			<th align="left" width="250">
+				İç saha
+			</th>
+<th align="left" width="250">Deplasman
+</th>
+<th>&nbsp; Tahmin &nbsp;
+</th>
+<th>&nbsp; MS &nbsp;
+</th>
+<th>&nbsp; Puan &nbsp;
+</th>
+			<th align="center" width="50">
+				&nbsp; Müsabaka &nbsp;
+			</th>
+		</tr>
+
+
+
+
+@foreach (Match match in matches)
+{
+<tr>
+<td style="text-align: center;">@match.Date.ToString()<span class="flagicon"></span>
+</td>
+				<td style="text-align: right;">
+					@match.HomeTeam.TeamName<img src="https://raw.githubusercontent.com/R-Fatih/ACCDB/main/Logos/TeamLogos/ @match.HomeTeam.TeamId-.png" style="margin-left:10px" decoding="async" width="35" height="35">
+				</td>
+				<td style="text-align: left;">
+					<img src="https://raw.githubusercontent.com/R-Fatih/ACCDB/main/Logos/TeamLogos/ @match.AwayTeam.TeamId-.png" style="margin-right:10px" decoding="async" width="35" height="35">@match.AwayTeam.TeamName
+				</td>
+				<td style="text-align: center;">@match.Prediction.HomeScore-@match.Prediction.AwayScore
+</td>
+<td style="text-align: center;"> @match.HomeMS-@match.AwayMS
+				</td>
+				<td style="text-align: center;">
+					@if (@match.Prediction.HomeScore == @match.HomeMS && @match.Prediction.AwayScore == @match.AwayMS)
+					{
+						<span>3</span>
+					}
+					else
+					{
+						<span>1</span>
+
+					}
+				</td>
+				<td style="text-align: center;">
+					<img src="@match.League .png" decoding="async" width="35" height="35">
+				</td>
+			</tr>
+}
+		
+</tbody></table>
+
+
+@code {
+	SqlConnector sqlConnector = new SqlConnector();
+	string url,url2;
+	int userId,countryId;
+	string userName;
+	List<Match> matches = new List<Match>();
+
+
+
+
+	List<Country> countries = new List<Country>();
+
+	protected override void OnInitialized()
+	{
+	}
+	protected override  async Task OnInitializedAsync()
+	{
+		userId =Convert.ToInt32( Preferences.Get("DetailedUserId", "0"));
+		countryId = Convert.ToInt32(Preferences.Get("DetailedCountryId", "0"));
+		userName = Preferences.Get("UserName", "0");
+
+		//JS.InvokeVoidAsync("alertmes", userId.ToString());
+		//username = Preferences.Get("UserName", "def");
+		sqlConnector.Connection().Open();
+		SqlCommand sqlCommand1 = new SqlCommand("select * from Countries", sqlConnector.Connection());
+		SqlDataReader dataReader1 = sqlCommand1.ExecuteReader();
+		while (dataReader1.Read())
+		{
+			Country country = new Country(Convert.ToInt32(dataReader1["CountryId"].ToString()), dataReader1["CountryName"].ToString());
+			countries.Add(country);
+		}
+		sqlConnector.Connection().Close();
+
+
+		GetMatches(countryId);
+
+
+	}
+	void TabClicked(int countryId, string countryName)
+	{
+		JS.InvokeVoidAsync("openCity", countryName, countryId);
+		GetMatches(countryId);
+
+
+	}
+
+	void GetMatches(int countryId)
+	{
+		matches.Clear();
+		sqlConnector.Connection().Open();
+		SqlCommand sqlCommand = new SqlCommand("select Matches.MatchId,Date, HomeTeamId,(select TeamName from Teams where TeamId=HomeTeamId )as 'HomeName',AwayTeamId,(select TeamName from Teams where TeamId=AwayTeamId )as 'AwayName',HomeMS,AwayMS,LeagueId,PredictionId,HomeScore,AwayScore from Predictions inner join Matches on Matches.MatchId = Predictions.MatchId  where (Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = 1 and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " )) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = 1  and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = -1  and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = -1  and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " ) or (Predictions.HomeScore=Matches.HomeMS and Predictions.AwayScore=Matches.AwayMS and (Matches.CountryId=" + countryId + " )) and UserId=" + userId+" order by Date desc" , sqlConnector.Connection());
+		//JS.InvokeVoidAsync("alertmes", "select Matches.MatchId,Date, HomeTeamId,(select TeamName from Teams where TeamId=HomeTeamId )as 'HomeName',AwayTeamId,(select TeamName from Teams where TeamId=AwayTeamId )as 'AwayName',HomeMS,AwayMS,LeagueId,PredictionId,HomeScore,AwayScore from Predictions inner join Matches on Matches.MatchId = Predictions.MatchId  where (Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = 1 and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " )) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = 1  and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = -1  and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = -1  and Predictions.UserId=" + userId + " and (Matches.CountryId=" + countryId + " ) or (Predictions.HomeScore=Matches.HomeMS and Predictions.AwayScore=Matches.AwayMS and (Matches.CountryId=" + countryId + " )) and UserId=" + userId + " ");
+		SqlDataReader dataReader = sqlCommand.ExecuteReader();
+		while (dataReader.Read())
+		{
+			Match match = new Match(
+								new Team(Convert.ToInt32(dataReader["HomeTeamId"].ToString()), dataReader["HomeName"].ToString()),
+								new Team(Convert.ToInt32(dataReader["AwayTeamId"].ToString()), dataReader["AwayName"].ToString()),
+							Convert.ToDateTime(dataReader["Date"].ToString()),
+						(dataReader["HomeMS"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["HomeMS"].ToString()),
+						(dataReader["AwayMS"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["AwayMS"].ToString()),
+							new League(Convert.ToInt32(dataReader["LeagueId"].ToString())),
+							new Prediction(
+								(dataReader["PredictionId"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["PredictionId"].ToString()),
+								(dataReader["HomeScore"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["HomeScore"].ToString()),
+								(dataReader["AwayScore"] == DBNull.Value) ? (int?)null : Convert.ToInt32(dataReader["AwayScore"].ToString())
+								, Convert.ToInt32(dataReader["MatchId"].ToString()), userId
+				)
+						);
+			matches.Add(match);
+		}
+		sqlConnector.Connection().Close();
+	}
+}
+

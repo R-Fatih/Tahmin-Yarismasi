@@ -1,0 +1,144 @@
+﻿@page "/Standings"
+@page "/Standings/{UserName}"
+
+@using MauiApp4.Data
+@using Microsoft.Data.SqlClient
+@inject NavigationManager navManager
+@inject IJSRuntime JS
+
+<h3>Yarışma Puan Durumu</h3>
+
+<div class="tab">
+	@foreach (Country country in countries)
+	{
+			<button class="tablinks" id="@country.CountryName" @onclick="()=>TabClicked(country.CountryId,country.CountryName)">
+				<img width="45px" height="26px" src="img/CountrySelectionFlags/@country.CountryId$.png" />
+			</button>
+
+	}
+</div>
+@foreach (Country country1 in countries)
+{
+	col = 1;
+
+
+<div id="@country1.CountryId" class="tabcontent">
+
+<div class="p0c-competition-tables__table-wrapper">  
+	<table class="p0c-competition-tables__table p0c-competition-tables__table--total"> 
+		<thead> <tr> 
+			<th data-split-table="" class="p0c-competition-tables__column-header--asc"> 
+			<span class="p0c-competition-tables__header-cell"> Sıra </span> </th> 
+			<th data-split-table="" class="p0c-competition-tables__team"> 
+				<span class="p0c-competition-tables__header-cell"> Kullanıcı </span> </th> <th data-split-table=""> 
+					<span class="p0c-competition-tables__header-cell"> Eyt Puanları </span> </th> <th data-split-table="" data-split="" class="p0c-competition-tables__plus-minus p0c-competition-tables__split-goals-difference"> 
+						<span class="p0c-competition-tables__header-cell"> +/- </span> </th> 
+						<th> <span class="p0c-competition-tables__header-cell"> Toplam Puan </span> </th> 
+						<th> <span class="p0c-competition-tables__header-cell"> - </span> </th> 
+						
+							 </tr> </thead>
+		<tbody>
+			@foreach (StandingsUser user in standingsUsers)
+{
+				<tr style="background-color:@user.currentUser" class=" p0c-competition-tables__row p0c-competition-tables__row--rank-status p0c-competition-tables__row--rank-status-1  ">
+					<td data-split-table="">
+						<span class="p0c-competition-tables__rank" data-value="">@col</span>
+								<label class="p0c-competition-tables__h2h-checkbox"> <input type="checkbox"> <span>@col</span> </label> </td> 
+								<td data-split-table="" class="p0c-competition-tables__team"> <a  class="p0c-competition-tables__link" data-jsblank="true"> 
+									<span class="p0c-competition-tables__team-name p0c-competition-tables__team-name--full" data-value=""> @user.userName </span> 
+									<span class="p0c-competition-tables__team-name p0c-competition-tables__team-name--abbr" title=""> @user.userName </span> </a>
+						@if (user.badge.Name != "")
+						{
+
+							<img class="p0c-competition-tables__crest" src="@user.badge.Position _rozet.png" title="@user.badge.Name">
+						}
+
+					</td> 
+											<td data-split-table=""> @user.eytPoints </td> <td data-split-table="" class="p0c-competition-tables__plus-minus">  </td> 
+									<td> @user.points </td>
+					<td> <button  class="btn btn-primary" @onclick="()=>buttonClicked(user)">Detaylar</button> </td>
+				</tr>
+				col++;
+			}
+</tbody> 
+</table> 
+
+</div>
+</div>
+}
+@code {
+	string username;
+	string bein = "https://media01.tr.beinsports.com/img/teams/1/";
+	int col=1;
+	SqlConnector sqlConnector = new SqlConnector();
+	List<StandingsUser> standingsUsers = new List<StandingsUser>(); 
+	List<Badge> badges = new List<Badge>();
+	List<Country> countries = new List<Country>();
+
+	[Parameter]
+	public string? UserName { get; set; }
+	protected override void OnInitialized()
+	{
+		col=1;
+
+
+	}
+	int selectedco = 0;
+	public void buttonClicked(StandingsUser user){
+		Preferences.Set("DetailedUserId", user.id.ToString());
+		Preferences.Set("DetailedCountryId", selectedco.ToString());
+
+		navManager.NavigateTo("/MatchDetails");
+
+	}
+	void TabClicked(int countryId,string countryName)
+	{
+		JS.InvokeVoidAsync("openCity", countryName, countryId);
+		GetStandings(countryId);
+		selectedco = countryId;
+
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		username = Preferences.Get("UserName","def");
+		sqlConnector.Connection().Open();
+		SqlCommand sqlCommand1 = new SqlCommand("select * from Countries", sqlConnector.Connection());
+		SqlDataReader dataReader1 = sqlCommand1.ExecuteReader();
+		while (dataReader1.Read())
+		{
+			Country country = new Country(Convert.ToInt32(dataReader1["CountryId"].ToString()), dataReader1["CountryName"].ToString());
+			countries.Add(country);
+		}
+		sqlConnector.Connection().Close();
+
+		//GetStandings(0);
+	}
+	void GetStandings(int countryId)
+	{
+		standingsUsers.Clear();
+		col = 1;
+		try
+		{
+
+
+
+			sqlConnector.Connection().Open();
+			//SqlCommand sqlCommand = new SqlCommand("select * from Users", sqlConnector.Connection());
+			SqlCommand sqlCommand = new SqlCommand("select Id,UserName,(select(select (count(*)*3)+((select count(*) from Predictions inner join Matches on Matches.MatchId = Predictions.MatchId where (Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = 1 and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " )) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = 1  and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = -1  and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = -1  and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) )) from Predictions inner join Matches on Predictions.MatchId=Matches.MatchId where Predictions.HomeScore=Matches.HomeMS and Predictions.AwayScore=Matches.AwayMS and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) ))as 'TotalPoints',(select count(*) from Predictions inner join Matches on Matches.MatchId = Predictions.MatchId where (Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = 1 and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " )) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = 1  and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.HomeMS = Predictions.HomeScore and Matches.AwayMS - Predictions.AwayScore = -1  and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) or Matches.HomeMS != Matches.AwayMS and Predictions.HomeScore != Predictions.AwayScore  and Matches.AwayMS = Predictions.AwayScore and Matches.HomeMS - Predictions.HomeScore = -1  and Predictions.UserId=Id and (Matches.CountryId=" + countryId + " ) ) as 'EytPoints',(select UserBadgeID from BadgeData where UserID=Users.Id) as 'BadgeId',(select Name from BadgeData inner join Badges on BadgeData.UserBadgeID=Badges.ID where UserID=Users.Id) as 'BadgeName' from Users ORDER BY TotalPoints desc, EytPoints asc", sqlConnector.Connection());
+			SqlDataReader dataReader = sqlCommand.ExecuteReader();
+			while (dataReader.Read())
+			{
+
+				StandingsUser standingsUser = new StandingsUser(Convert.ToInt32(dataReader["Id"].ToString()),dataReader["UserName"].ToString(), dataReader["EytPoints"].ToString(), dataReader["TotalPoints"].ToString(), (username == dataReader["UserName"].ToString() ? "rgba(255,129,0,0.1)" : "rgba(255,255,255,0.1)"), new Badge(dataReader["BadgeId"].ToString(), dataReader["BadgeName"].ToString(), dataReader["BadgeId"].ToString()));
+				standingsUsers.Add(standingsUser);
+			}
+			sqlConnector.Connection().Close();
+		}
+		catch (Exception ex)
+		{
+
+			JS.InvokeVoidAsync("alertmes","SQL HATASı"+ ex.Message+ex.Source);
+		}
+	}
+
+}

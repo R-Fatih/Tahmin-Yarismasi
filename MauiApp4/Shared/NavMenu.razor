@@ -1,0 +1,86 @@
+﻿@using MauiApp4.Data;
+
+@using MauiApp4.Pages
+
+
+<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="Error">Tahmin Yarışması</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+
+
+    <ul class="nav flex-column">
+
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Ana Menü
+            </NavLink>
+        </li>
+
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Standings">
+                <span class="oi oi-grid-three-up" aria-hidden="true"></span> Puan Durumu
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="WeeksMatches">
+                <span class="oi oi-list" aria-hidden="true"></span> Maçlar
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Settings">
+                <span class="oi oi-menu" aria-hidden="true"></span> Ayarlar
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Rules">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Kurallar
+            </NavLink>
+        </li>
+    </ul>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    @*   <a onclick="document.getElementById('id01').style.display='block'"><div  style=" margin-top:10px;   position: absolute;
+    bottom:0%; width:100%"  class="card">
+    <img src="img.jpg" alt="John" style="width:100%">
+    <h1>John Doe</h1>
+    <p class="title">CEO & Founder, Example</p>
+    <p>Harvard University</p>
+
+    <p><button>Contact</button></p>
+    </div>
+    </a>*@
+</div>
+<div id="id01" class="modal">
+
+    <form class="modal-content animate" action="/action_page.php" method="post">
+        <div class="imgcontainer">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+        </div>
+    </form>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+    public User user;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = new User();
+
+    }
+}

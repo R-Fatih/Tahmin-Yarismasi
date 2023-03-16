@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>MauiApp4</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="MauiApp4.styles.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="status-bar-safe-area"></div>
+
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.webview.js" autostart="false"></script>
+    <script>
+        function alertmes(message) {
+            alert(message);
+        }
+    </script>
+    <script>
+        function getLI(i) {
+            var e = document.getElementById(i);
+            console.log(i);
+            return e.textContent;
+        }
+    </script>
+
+    <script>
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            document.getElementById(evt).className += " active";
+        }
+
+        // Get the element with id="defaultOpen" and click on it
+    </script>
+    <script>
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById('Türkiye').click();
+    </script>
+    <script>
+        function getWidth() {
+            var w = window.innerWidth;
+            return w;
+        }</script>
+    <script>
+        function getHeight() {
+
+            var h = window.innerHeight;
+            return h;
+        }</script>
+</body>
+
+</html>

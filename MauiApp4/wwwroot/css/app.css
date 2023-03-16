@@ -1,0 +1,525 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    color: #0071c1;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
+
+.status-bar-safe-area {
+    display: none;
+}
+
+@supports (-webkit-touch-callout: none) {
+    .status-bar-safe-area {
+        display: flex;
+        position: sticky;
+        top: 0;
+        height: env(safe-area-inset-top);
+        background-color: #f7f7f7;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .flex-column, .navbar-brand {
+        padding-left: env(safe-area-inset-left);
+    }
+}
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+input[type='number'] {
+    width: 40px;
+}
+
+.match-row:nth-child(even) > div {
+    font-size: .75rem;
+    line-height: 1.125rem;
+    border: #fff solid;
+    border-width: 0 0.3125rem;
+    /*background-color: #fff;*/
+
+
+    position: relative;
+    background: rgb(8 31 44 / 5%)
+}
+
+.match-row:nth-child(odd) > div {
+    font-size: .75rem;
+    line-height: 1.125rem;
+    border: #fff solid;
+    border-width: 0 0.3125rem;
+    /*background-color*/: #fff;
+    position: relative;
+}
+
+.match-row__match-content {
+    display: flex;
+    min-height: 2rem;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 0 0 0 0.3125rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.match-row__start-time {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 2rem;
+    flex: 0 0 2rem;
+    width: 2rem;
+    font-style: italic;
+    margin-right: 0.1875rem;
+}
+
+.match-row__middle-container {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    padding: 0 10px;
+    vertical-align: top;
+}
+
+.match-row__middle {
+}
+
+.match-row__team-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+    position: relative;
+    line-height: 1.375rem;
+}
+
+.match-row__team-name2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: table-cell;
+    vertical-align: middle;
+    width: 40px;
+    position: relative;
+    line-height: 1.375rem;
+    padding: 10px;
+}
+
+.match-row__team-name3 {
+}
+
+.match-row__team-name4 {
+    text-align: right;
+    vertical-align: middle;
+    left: 150px;
+}
+
+.match-row__team-name--home {
+    text-align: right;
+}
+
+.match-row__team-name--away {
+    text-align: left;
+}
+
+.match-row__team-name--away2 {
+}
+
+.match-row a {
+    text-decoration: none;
+}
+
+.match-row__team-crest {
+}
+
+.match-row__team-crest--home {
+    float: right;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.match-row__team-crest--away {
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.match-row--pre .match-row__start-time--home {
+    position: center;
+    font-weight: 700;
+    font-style: normal;
+    top: 50%;
+    margin-top: -0.5625rem;
+    margin-left: -0.8125rem;
+    float: left;
+}
+
+.match-row--pre .match-row__start-time--away {
+    font-weight: 700;
+    font-style: normal;
+    top: 50%;
+    margin-top: -0.5625rem;
+    margin-left: -0.8125rem;
+    float: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.inputs {
+    text-align: center;
+}
+
+.widget-dateslider {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 9.625rem;
+    position: relative
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider {
+        width: 25rem
+    }
+
+        .widget-dateslider::before {
+            content: "";
+            display: block;
+            -webkit-box-ordinal-group: 2;
+            -ms-flex-order: 1;
+            order: 1;
+            height: 1.5rem;
+            width: 1px;
+            background-color: #969696;
+            margin-right: .3125rem
+        }
+}
+
+.widget-dateslider__arrow, .widget-dateslider__datepicker-toggle {
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 1.75rem;
+    line-height: 1.75rem;
+    outline: none
+}
+
+    .widget-dateslider__arrow::before, .widget-dateslider__datepicker-toggle::before {
+        display: block;
+        width: 1.5rem;
+        height: 1.75rem;
+        line-height: 1.75rem
+    }
+
+.widget-dateslider__arrow {
+    color: #1f80d1;
+    -webkit-transition: color .3s;
+    transition: color .3s
+}
+
+.widget-dateslider__arrow--previous:before {
+    font-family: "mksh-icons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-feature-settings: normal;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+.widget-dateslider__arrow--next:before {
+    font-family: "mksh-icons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-feature-settings: normal;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+.dev-desktop .widget-dateslider__arrow:hover {
+    color: #1b71b8
+}
+
+.widget-dateslider__datepicker-toggle:before {
+    font-family: "mksh-icons";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-feature-settings: normal;
+    font-feature-settings: normal;
+    font-variant: normal;
+    text-transform: none;
+    direction: ltr;
+    unicode-bidi: embed;
+    content: "\f108";
+    color: #000;
+    -webkit-transition: color .3s;
+    transition: color .3s
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider__datepicker-toggle {
+        -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+        order: 2;
+        width: 3rem;
+        overflow: hidden
+    }
+
+        .widget-dateslider__datepicker-toggle::before {
+            float: left
+        }
+
+        .widget-dateslider__datepicker-toggle:after {
+            font-family: "mksh-icons";
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            -webkit-font-feature-settings: normal;
+            font-feature-settings: normal;
+            font-variant: normal;
+            text-transform: none;
+            direction: ltr;
+            unicode-bidi: embed;
+            content: "\f10e";
+            float: right;
+            width: 1.5rem;
+            height: 1.75rem;
+            line-height: 1.75rem;
+            font-size: .4375rem;
+            color: #1f80d1;
+            -webkit-transition: color .3s;
+            transition: color .3s
+        }
+}
+
+.dev-desktop .widget-dateslider__datepicker-toggle:hover::before {
+    color: #666
+}
+
+@media (min-width: 580px) {
+    .dev-desktop .widget-dateslider__datepicker-toggle:hover::after {
+        color: #1b71b8
+    }
+}
+
+.widget-dateslider__slider {
+    width: 4.5rem;
+    height: 1.75rem;
+    overflow: hidden
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider__slider {
+        width: 18.375rem
+    }
+}
+
+.widget-dateslider__dates {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    line-height: 0;
+    white-space: nowrap;
+    height: 1.75rem;
+    -webkit-transition: -webkit-transform .5s;
+    transition: -webkit-transform .5s;
+    transition: transform .5s;
+    transition: transform .5s, -webkit-transform .5s
+}
+
+.widget-dateslider__date {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    font-size: .75rem;
+    line-height: 1.75rem;
+    text-align: center;
+    width: 4.5rem;
+    height: 1.75rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: color .3s;
+    transition: color .3s
+}
+
+.dev-desktop .widget-dateslider__date:hover {
+    color: #ff8100
+}
+
+.widget-dateslider__date--selected {
+    font-weight: 700;
+    cursor: default;
+    color: #ff8100
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider__date {
+        width: 2.25rem;
+        margin: 0 .1875rem;
+        line-height: .75rem
+    }
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider__day-name, .widget-dateslider__day-date {
+        display: block
+    }
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider__day-name {
+        margin-bottom: .25rem
+    }
+}
+
+.widget-dateslider__datepicker {
+    display: none;
+    background-color: #fff;
+    position: absolute;
+    left: -.3125rem;
+    top: 100%;
+    width: 19.375rem;
+    -webkit-box-shadow: 0 0 2px rgba(8,31,44,0.5);
+    box-shadow: 0 0 2px rgba(8,31,44,0.5);
+    margin-top: .25rem;
+    z-index: 1
+}
+
+@media (min-width: 580px) {
+    .widget-dateslider__datepicker {
+        right: 0;
+        left: auto;
+        width: 20rem
+    }
+}
+
+.widget-dateslider__datepicker--open {
+    display: block
+}

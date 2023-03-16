@@ -1,0 +1,198 @@
+﻿@page "/Register"
+@using MauiApp4.Data;
+@using Microsoft.Data.SqlClient;
+@using OneSignalSDK.DotNet;
+@inject IJSRuntime JS
+@inject NavigationManager navManager
+
+<div class="container">
+    <h1>Register</h1>
+    <hr>
+
+    <label for="username"><b>Kullanıcı adı</b></label>
+    <input type="text" placeholder="Kullanıcı adı"  @onchange="@((e) => {usernameInputChanged((string)e.Value);})"  name="username" id="username" required>
+
+    <label for="psw"><b>Şifre</b></label>
+    <input type="password" placeholder="Şifre" @bind="user.Password" name="psw" id="psw" required>
+
+    <label for="mail"><b>Mail adresi</b></label>
+    <input type="text" placeholder="Mail adresi" name="mail" @bind="user.UserMail" id="mail" required>
+
+ 
+    <p>Lütfen tahmin yapmak istediğiniz ligleri seçiniz <small>(Maçlarınızda sadece seçtiğiniz liglerin maçları gözükür)</small></p>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    @foreach (Country country in countries)
+    
+    {
+         <label class="fancy-checkbox-label">
+            <input @onchange="@((e) => { CountrySelected((bool) e.Value,country);})" type="checkbox">
+    <span class="fancy-checkbox fancy-checkbox-img"></span>
+    <img width="182px" height="103px" src="img/CountrySelectionFlags/@country.CountryId$.png">
+  </label> 
+    }
+
+<button disabled="@(usernamebool)" class="registerbtn" onclick="@button1OnClick">
+        <span>Üye Ol</span>
+
+    </button>
+    <br /><span hidden="@(!usernamebool)" style="color:red">Böyle bir kullanıcı mevcut veya Kullanıcı adınız rakam veya boşluk içeriyor.</span>
+  </div>
+<hr>
+
+
+
+@code {
+    User user;
+    List<Country> countries = new List<Country>();
+    SqlConnector sqlConnector = new SqlConnector();
+    bool usernamebool = false;
+    List<Country> selectedcountries = new List<Country>();
+    void CountrySelected(bool check,Country country)
+    {
+        if (check)
+        {
+            selectedcountries.Add(country);
+        }
+        else
+        {
+            selectedcountries.Remove(country);
+        }
+        //JS.InvokeVoidAsync("alertmes", a);
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        user = new User();
+        sqlConnector.Connection().Open();
+        SqlCommand sqlCommand = new SqlCommand("select * from Countries", sqlConnector.Connection());
+        SqlDataReader dataReader = sqlCommand.ExecuteReader();
+        while(dataReader.Read()){
+            Country country = new Country(Convert.ToInt32(dataReader["CountryId"].ToString()), dataReader["CountryName"].ToString());
+            countries.Add(country);
+        }
+        sqlConnector.Connection().Close();
+    }
+    void button1OnClick(){
+        DateTime dateTime = DateTime.Now;
+        if (user.UserName != "" && user.Password != "")
+        {
+            sqlConnector.Connection().Open();
+            SqlCommand sqlCommand = new SqlCommand("insert into Users (UserName, Password, UserMail,RegistrationDate) values('" + user.UserName + "', '" + user.Password + "', '" + user.UserMail + "','"+dateTime.ToString("yyyy-MM-dd HH:mm:ss")+"')", sqlConnector.Connection());
+            sqlCommand.ExecuteNonQuery();
+            sqlConnector.Connection().Close();
+
+
+            sqlConnector.Connection().Open();
+            SqlCommand sqlCommand2 = new SqlCommand("select * from Users where UserName='"+user.UserName+"'", sqlConnector.Connection());
+            SqlDataReader dataReader = sqlCommand2.ExecuteReader();
+            while (dataReader.Read())
+            {
+                user.UserId =Convert.ToInt32( dataReader["Id"].ToString());
+            }
+            sqlConnector.Connection().Close();
+            for (int i = 0; i < selectedcountries.Count; i++)
+            {
+                sqlConnector.Connection().Open();
+                SqlCommand sqlCommand1 = new SqlCommand("insert into LeagueData (UserId,CountryId) values (@p1,@p2)", sqlConnector.Connection());
+                sqlCommand1.Parameters.AddWithValue("@p1", user.UserId);
+                sqlCommand1.Parameters.AddWithValue("@p2", selectedcountries[i].CountryId);
+                sqlCommand1.ExecuteNonQuery();
+                sqlConnector.Connection().Close();
+
+            }
+
+            for (int i = 0; i < selectedcountries.Count; i++)
+            {
+
+
+                OneSignal.Default.SendTag("league", selectedcountries[i].CountryName);
+            }
+            JS.InvokeVoidAsync("alertmes", "Kayıt başarıyla oluşturuldu");
+            navManager.NavigateTo("");
+        }else{
+            JS.InvokeVoidAsync("alertmes", "Kullanıcı adı veya şifre boş olamaz");
+
+        }
+    }       
+
+        bool exist, bosluk, harfler;
+
+    void usernameInputChanged(string username)
+    {
+        Controlss(username);
+        if (exist == true || bosluk == true || harfler == true)
+        {
+            //label4.Visible = true;
+            usernamebool = true;
+            // "Böyle bir kullanıcı mevcut veya Kullanıcı adınız rakam veya boşluk içeriyor."
+        }else{
+            usernamebool = false;
+            user.UserName = username;
+        }
+
+    }
+    public void Controlss(string username)
+    {
+        int specials = 0, digits = 0, letters = 0, spaces = 0;
+
+        specials = 0; digits = 0; letters = 0; spaces = 0;
+
+
+        try
+        {
+
+
+
+            SqlConnector sqlConnector = new SqlConnector();
+
+                    sqlConnector.Connection().Open();
+                SqlCommand sqlCommand = new SqlCommand("Select * from Users where UserName='" + username + "'", sqlConnector.Connection());
+                SqlDataReader dataReader = sqlCommand.ExecuteReader();
+                
+
+            if (dataReader.Read())
+                {
+                    exist = true;
+                }
+                else
+                {
+                    exist = false;
+            }
+            sqlConnector.Connection().Close();
+
+            
+        }
+
+        catch (Exception ex) { }
+        if (username.Contains(" "))
+            bosluk = true;
+        else
+            bosluk = false;
+
+        for (int b = 0; b < username.Length; ++b)
+        {
+            char ch = username[(b)];
+            if (!Char.IsDigit(ch) && !Char.IsLetter(ch) && !Char.IsWhiteSpace(ch))
+            {
+                ++specials;
+            }
+            else if (Char.IsDigit(ch))
+            {
+                ++digits;
+            }
+            else if (Char.IsWhiteSpace(ch))
+            {
+                ++spaces;
+            }
+            else
+            {
+                ++letters;
+            }
+            if (specials > 0 || digits > 0 || username.Contains("ı") || username.Contains("ü") || username.Contains("ğ") || username.Contains("ç") || username.Contains("ö") || username.Contains("ş"))
+                harfler = true;
+            else
+                harfler = false;
+        }
+
+    }
+}

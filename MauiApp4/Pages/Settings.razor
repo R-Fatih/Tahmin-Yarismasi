@@ -1,0 +1,145 @@
+﻿@page "/Settings"
+@using MauiApp4.Data;
+@using Microsoft.Data.SqlClient;
+@inject IJSRuntime JS
+
+<h3>Settings</h3>
+
+
+
+<label for="psw"><b>Eski Şifre</b></label>
+<input type="password" placeholder="Eski Şifre" @bind="oldpass" name="psw" id="psw" required>
+
+<label for="psw2"><b>Yeni Şifre</b></label>
+<input type="password" placeholder="Yeni Şifre" name="psw" @bind="newpass" id="psw2" required>
+<label for="psw3"><b>Yeni Şifre Tekrar</b></label>
+<input type="password" placeholder="Yeni Şifre Tekrar" name="psw" @bind="user.Password" id="psw3" required>
+<button disabled="@(usernamebool)" class="registerbtn" onclick="@button1OnClick">
+    <span>Şifreyi Yenile</span>
+
+</button>
+
+
+<p>Lütfen tahmin yapmak istediğiniz ligleri seçiniz <small>(Maçlarınızda sadece seçtiğiniz liglerin maçları gözükür)</small> </p>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+@foreach (Country country in countries)
+
+{
+    <label class="fancy-checkbox-label">
+        <input @onchange="@((e) => { CountrySelected((bool) e.Value,country);})" checked="@GetSelections(country.CountryId)" type="checkbox">
+        <span class="fancy-checkbox fancy-checkbox-img"></span>
+        <img width="182px" height="103px" src="img/CountrySelectionFlags/@country.CountryId$.png">
+    </label>
+}
+
+
+@code {
+    User user;
+    string oldpass,newpass;
+    List<Country> countries = new List<Country>();
+    SqlConnector sqlConnector = new SqlConnector();
+    bool usernamebool = false;
+    List<Country> selectedcountries = new List<Country>();
+    void CountrySelected(bool check, Country country)
+    {
+        if (check)
+        {
+            sqlConnector.Connection().Open();
+            SqlCommand sqlCommand1 = new SqlCommand("insert into LeagueData (UserId,CountryId) values (@p1,@p2)", sqlConnector.Connection());
+            sqlCommand1.Parameters.AddWithValue("@p1", user.UserId);
+            sqlCommand1.Parameters.AddWithValue("@p2", country.CountryId);
+            sqlCommand1.ExecuteNonQuery();
+            sqlConnector.Connection().Close();
+            JS.InvokeVoidAsync("alertmes", country.CountryName + " ülkelere eklendi.");
+        }
+        else
+        {
+            sqlConnector.Connection().Open();
+            SqlCommand sqlCommand = new SqlCommand("delete from LeagueData where UserId=@p1 and CountryId=@p2", sqlConnector.Connection());
+            sqlCommand.Parameters.AddWithValue("@p1", user.UserId);
+            sqlCommand.Parameters.AddWithValue("@p2", country.CountryId);
+            sqlCommand.ExecuteNonQuery();
+            sqlConnector.Connection().Close();
+            JS.InvokeVoidAsync("alertmes", country.CountryName+" ülkelerden kaldırıldı."); 
+
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        user = new User();
+        user.UserId = Convert.ToInt32(Preferences.Get("UserId", "0"));
+
+        sqlConnector.Connection().Open();
+        SqlCommand sqlCommand = new SqlCommand("select * from Countries", sqlConnector.Connection());
+        SqlDataReader dataReader = sqlCommand.ExecuteReader();
+        while (dataReader.Read())
+        {
+            Country country = new Country(Convert.ToInt32(dataReader["CountryId"].ToString()), dataReader["CountryName"].ToString());
+            countries.Add(country);
+        }
+        sqlConnector.Connection().Close();
+    }
+    bool GetSelections(int countryId)
+    {
+        sqlConnector.Connection().Open();
+        SqlCommand sqlCommand = new SqlCommand("select * from LeagueData where UserId='" + user.UserId + "' and CountryId='" + countryId + "'", sqlConnector.Connection());
+        SqlDataReader dataReader = sqlCommand.ExecuteReader();
+
+        if (dataReader.Read())
+        {
+            sqlConnector.Connection().Close();
+            //JS.InvokeVoidAsync("alertmes", user.UserId);
+            return true;
+
+        }
+        else
+        {
+            sqlConnector.Connection().Close();
+
+            return false;
+
+        }
+    }
+    void button1OnClick()
+    {
+        if (GetOldPass() == oldpass)
+        {
+            if (user.Password == newpass)
+            {
+                sqlConnector.Connection().Open();
+                SqlCommand sqlCommand = new SqlCommand("update Users set Password=@p1 where Id=@p2", sqlConnector.Connection());
+                sqlCommand.Parameters.AddWithValue("@p1", newpass);
+                sqlCommand.Parameters.AddWithValue("@p2", user.UserId);
+                sqlCommand.ExecuteNonQuery();
+                sqlConnector.Connection().Close();
+                JS.InvokeVoidAsync("alertmes", "Şifre başarıyla değiştirildi.");
+
+            }
+            else
+            {
+                JS.InvokeVoidAsync("alertmes", "Şifreler eşleşmiyor.");
+
+            }
+        }
+        else
+        {
+            JS.InvokeVoidAsync("alertmes", "Mevcut şifre hatalı.");
+        }
+    }
+    string GetOldPass()
+    {
+        string pass="";
+        sqlConnector.Connection().Open();
+        SqlCommand sqlCommand = new SqlCommand("select * from Users where Id=@p1", sqlConnector.Connection());
+        sqlCommand.Parameters.AddWithValue("@p1", user.UserId);
+        SqlDataReader dataReader = sqlCommand.ExecuteReader();
+        while (dataReader.Read())
+        {
+            pass= dataReader["Password"].ToString();
+
+        }
+        sqlConnector.Connection().Close();
+        return pass;
+    }
+}
